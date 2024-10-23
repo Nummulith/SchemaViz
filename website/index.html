@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAML Tabs Example</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .tabs { display: flex; cursor: pointer; }
+        .tab {
+            padding: 10px;
+            background-color: #f1f1f1;
+            margin-right: 5px;
+            display: inline-flex; /* Замените inline-block на inline-flex */
+            align-items: flex-start; /* Выравнивание по верхнему краю */
+            vertical-align: top;
+        }
+        .tab-content { display: none; padding: 15px; border: 1px solid #ccc; }
+        .tab-content.active { display: block; line-height: 1; }
+        textarea { width: 100%; height: 200px; margin-top: 10px; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <div class="tab" onclick="openTab('tab0')"><img src="img/logo.jpg" alt="Example Image" width="50" height="50">SchemaViz</div>
+        <div class="tab" onclick="openTab('tab1')">Metadata</div>
+        <div class="tab" onclick="openTab('tab2')">Data</div>
+        <div class="tab" onclick="openTab('tab3')">Result</div>
+    </div>
+
+    <div id="tab0" class="tab-content">
+        <h3>Home</h3>
+        Home page
+    </div>
+
+    <div id="tab1" class="tab-content">
+        <h3>Metadata.yaml</h3>
+        <input type="file" id="file1" onchange="loadFile(event, 'yaml1')">
+        <textarea id="yaml1"># Default Metadata.yaml content</textarea><br>
+    </div>
+
+    <div id="tab2" class="tab-content">
+        <h3>Data.yaml</h3>
+        <input type="file" id="file2" onchange="loadFile(event, 'yaml2')">
+        <textarea id="yaml2"># Default Data.yaml content</textarea><br>
+    </div>
+
+    <div id="tab3" class="tab-content">
+        <h3>Result</h3>
+        <button onclick="sendYAML()">Send to API</button>
+        <div id="result"></div><br>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        function openTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function loadFile(event, elementId) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById(elementId).value = reader.result;
+            };
+            reader.readAsText(event.target.files[0]);
+        }
+
+        function sendYAML() {
+            const yaml1 = document.getElementById('yaml1').value;
+            const yaml2 = document.getElementById('yaml2').value;
+
+            axios.post('https://api.example.com/merge-yaml', { yaml1, yaml2 })
+                .then(response => {
+                    document.getElementById('result').innerHTML = response.data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerHTML = 'Failed to get result';
+                });
+        }
+
+        // Set default active tab
+        openTab('tab1');
+    </script>
+</body>
+</html>

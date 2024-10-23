@@ -1,0 +1,77 @@
+Score:
+  Color: BLUE_DARK
+  Draw: [VIEW]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+
+Part:
+  Color: LILA
+  Draw: [VIEW]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+  Parent:
+    Type: Score
+    Role: OWNER
+
+# Stage:
+#   Color: RED_LIGHT
+#   Draw: [ID, VIEW, CLASS]
+#   ListName:
+#     Role: LIST_NAME
+#     Value: Stages
+#   Parent:
+#     Type: Part
+#     Role: LIST_ITEM
+#   Id:
+#     Role: ID
+#   Name:
+#     Role: VIEW
+
+# Stream:
+#   Color: BLUE_LIGHT
+#   Draw: [ID, VIEW, CLASS]
+#   ListName:
+#     Role: LIST_NAME
+#     Value: Instrs
+#   Parent:
+#     Type: Part
+#     Role: LIST_ITEM
+#   Id:
+#     Role: ID
+#   Name:
+#     Role: VIEW
+
+Instr:
+  Color: CRIMSON
+  Draw: [ID, VIEW, CLASS]
+  ListName:
+    Role: LIST_NAME
+    Value: Instrs
+  Parent:
+    Type: Part
+    Role: LIST_ITEM
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+  Partiture:
+    Type: Part
+    Role: Link_In
+
+# Stave:
+#   Color: GREEN
+#   Draw: [ID, VIEW, CLASS]
+#   ListName:
+#     Role: LIST_NAME
+#     Value: Staves
+#   Parent:
+#     Type: Part
+#     Role: LIST_ITEM
+#   Id:
+#     Role: ID
+#   Name:
+#     Role: VIEW

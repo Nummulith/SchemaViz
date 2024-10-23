@@ -1,0 +1,6 @@
+RootPath: "C:\\Code\\p.Music\\128\\"
+Articles: "128.graph"
+# Services: Common, Network, Storage, Security, VPC, Delivery
+Engine: dot # dot fdp
+ReloadTime: 0
+RenderLoop: 0
