@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAML Tabs Example</title>
+    <title>SchemaViz</title>
     <style>
         body { font-family: Arial, sans-serif; }
         .tabs { display: flex; cursor: pointer; }
@@ -11,8 +11,8 @@
             padding: 10px;
             background-color: #f1f1f1;
             margin-right: 5px;
-            display: inline-flex; /* Замените inline-block на inline-flex */
-            align-items: flex-start; /* Выравнивание по верхнему краю */
+            display: inline-flex; 
+            align-items: flex-start;
             vertical-align: top;
         }
         .tab-content { display: none; padding: 15px; border: 1px solid #ccc; }
@@ -23,7 +23,10 @@
 </head>
 <body>
     <div class="tabs">
-        <div class="tab" onclick="openTab('tab0')"><img src="img/logo.jpg" alt="Example Image" width="50" height="50">SchemaViz</div>
+        <div class="tab" onclick="openTab('tab0')">
+            <img src="img/logo.jpg" alt="SchemaViz" width="50" height="50">
+            <b>SchemaViz</b>
+        </div>
         <div class="tab" onclick="openTab('tab1')">Metadata</div>
         <div class="tab" onclick="openTab('tab2')">Data</div>
         <div class="tab" onclick="openTab('tab3')">Result</div>
@@ -36,14 +39,14 @@
 
     <div id="tab1" class="tab-content">
         <h3>Metadata.yaml</h3>
-        <input type="file" id="file1" onchange="loadFile(event, 'yaml1')">
-        <textarea id="yaml1"># Default Metadata.yaml content</textarea><br>
+        <input type="file" id="file1" onchange="loadFile(event, 'metadata')">
+        <textarea id="metadata"># Default Metadata.yaml content</textarea><br>
     </div>
 
     <div id="tab2" class="tab-content">
         <h3>Data.yaml</h3>
-        <input type="file" id="file2" onchange="loadFile(event, 'yaml2')">
-        <textarea id="yaml2"># Default Data.yaml content</textarea><br>
+        <input type="file" id="file2" onchange="loadFile(event, 'data')">
+        <textarea id="data"># Default Data.yaml content</textarea><br>
     </div>
 
     <div id="tab3" class="tab-content">
@@ -69,21 +72,56 @@
         }
 
         function sendYAML() {
-            const yaml1 = document.getElementById('yaml1').value;
-            const yaml2 = document.getElementById('yaml2').value;
+            const path = 'https://wb14u9093k.execute-api.eu-central-1.amazonaws.com/prod/viz'
+            const metadata = document.getElementById('metadata').value;
+            const data     = document.getElementById('data'    ).value;
 
-            axios.post('https://api.example.com/merge-yaml', { yaml1, yaml2 })
-                .then(response => {
-                    document.getElementById('result').innerHTML = response.data;
+            let param = { metadata, data };
+            console.log('0:', param);
+
+            param = JSON.stringify(param);
+            console.log('1:', param);
+
+            axios.post(path, param)
+            .then(response => {
+                    document.getElementById('result').innerHTML = response.data["body"];
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    document.getElementById('result').innerHTML = 'Failed to get result';
+                    document.getElementById('result').innerHTML = error;
                 });
         }
 
         // Set default active tab
         openTab('tab1');
     </script>
+    <script>
+        // Функция для загрузки файла и вставки его содержимого в textarea
+        function loadYamlIntoTextarea(filePath, textareaId) {
+            fetch(filePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch ${filePath}: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById(textareaId).value = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Пример загрузки нескольких файлов
+        function loadYamls() {
+            loadYamlIntoTextarea('metadata.yaml', 'metadata');
+            loadYamlIntoTextarea('data.yaml', 'data');
+        }
+
+        // Вызов функции для загрузки файлов при загрузке страницы
+        window.onload = loadYamls;
+    </script>
+
 </body>
 </html>
