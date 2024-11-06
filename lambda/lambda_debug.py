@@ -3,6 +3,8 @@ import json
 import yaml
 import inspect
 
+import subprocess
+
 from ObjectModelFramework import SchemaVizObjectModel
 
 class lambda_invoke:
@@ -91,11 +93,62 @@ class lambda_viz(lambda_invoke):
             'result': draw,
         }
 
+        print(draw)
+
         return lambda_invoke.response(res)
 
+def print_directory_structure(path, indent=0):
+    if indent > 5:
+        return ""
+
+    structure = ""
+    try:
+        for item in os.listdir(path):
+            if item is None:
+                continue
+
+            item_path = os.path.join(path, item)
+
+            if item == "dot_builtins":
+                structure += path + "/" + item + '\n' # ('+' * indent) + 
+
+            if os.path.isdir(item_path):
+                structure += print_directory_structure(item_path, indent + 1)
+
+    except PermissionError:
+        # structure += ('*' * indent) + 'Permission denied: ' + path + '\n'
+        pass
+
+    except Exception as e:
+        # structure += ('*' * indent) + 'Error accessing: ' + str(e) + '\n'
+        pass
+    
+    return structure
+
+def call_bash(cmnd):
+    try:
+        print("Command: ", cmnd)
+
+        result = subprocess.run(cmnd, capture_output=True, text=True, env={"PATH": os.environ["PATH"] + ":/opt/python/bin"})
+        
+        print("Command output:", result.stdout)
+        print("Command error:", result.stderr)
+    except Exception as e:
+        print(f"Error executing command: {e}")
+
 def lambda_handler(event, context):
-    os.environ['PATH'] = '/opt/python/bin:' + os.environ['PATH']
+    # directory_to_print = '/'
+    # print(f"ls {directory_to_print}:")
+    # print(print_directory_structure(directory_to_print))
+
+    os.environ["PATH"] += os.pathsep + '/opt/python/bin'
+
+    # call_bash(["ls", "-l", "/lib64"])
+
+    # echo 'digraph G { A -> B; B -> C; C -> A; }' > test.dot
+    call_bash(["echo", "'digraph G { A -> B; B -> C; C -> A; }'", ">", "test.dot"])
+
+    # dot -Tpng test.dot -o test_output.png
+    call_bash(["/opt/python/bin/dot", "-Tpng", "test.dot", "-o", "test_output.png"])
 
     return lambda_viz.lambda_handler(event, context)
-
-# https://lifeinplaintextblog.wordpress.com/deploying-graphviz-on-aws-lambda/

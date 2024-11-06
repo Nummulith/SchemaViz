@@ -77,14 +77,15 @@
             const data     = document.getElementById('data'    ).value;
 
             let param = { metadata, data };
-            console.log('0:', param);
+            // console.log('0:', param);
 
             param = JSON.stringify(param);
-            console.log('1:', param);
+            // console.log('1:', param);
 
             axios.post(path, param)
             .then(response => {
-                    document.getElementById('result').innerHTML = response.data["body"];
+                    console.log(response.data);
+                    document.getElementById('result').innerHTML = response.data["result"];
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -92,11 +93,9 @@
                 });
         }
 
-        // Set default active tab
-        openTab('tab1');
+        openTab('tab0');
     </script>
     <script>
-        // Функция для загрузки файла и вставки его содержимого в textarea
         function loadYamlIntoTextarea(filePath, textareaId) {
             fetch(filePath)
                 .then(response => {
@@ -113,13 +112,11 @@
                 });
         }
 
-        // Пример загрузки нескольких файлов
         function loadYamls() {
-            loadYamlIntoTextarea('metadata.yaml', 'metadata');
-            loadYamlIntoTextarea('data.yaml', 'data');
+            loadYamlIntoTextarea('./data/metadata.yaml', 'metadata');
+            loadYamlIntoTextarea('./data/data.yaml', 'data');
         }
 
-        // Вызов функции для загрузки файлов при загрузке страницы
         window.onload = loadYamls;
     </script>
 
