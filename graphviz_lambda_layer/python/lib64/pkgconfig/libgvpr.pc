@@ -1,0 +1,11 @@
+prefix=/opt/graphviz
+exec_prefix=/opt/graphviz
+libdir=/opt/graphviz/lib
+includedir=/opt/graphviz/include/graphviz
+
+Name: libgvpr
+Description: The GVPR library
+Version: 2.46.0
+Libs: -L${libdir} -lgvpr -lcgraph -lcdt
+Cflags: -I${includedir}
+

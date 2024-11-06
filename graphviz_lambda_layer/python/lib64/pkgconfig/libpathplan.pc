@@ -1,0 +1,10 @@
+prefix=/opt/graphviz
+exec_prefix=/opt/graphviz
+libdir=/opt/graphviz/lib
+includedir=/opt/graphviz/include/graphviz
+
+Name: libpathplan
+Description: Library for planning polyline and bezier paths around polygon obstacles
+Version: 2.46.0
+Libs: -L${libdir} -lpathplan
+Cflags: -I${includedir}

@@ -1,0 +1,12 @@
+prefix=/opt/graphviz
+exec_prefix=/opt/graphviz
+libdir=/opt/graphviz/lib
+includedir=/opt/graphviz/include/graphviz
+plugins=7
+
+Name: libgvc
+Description: The GraphVizContext library 
+Version: 2.46.0
+Libs: -L${libdir} -lgvc -lcgraph -lcdt
+Cflags: -I${includedir}
+
