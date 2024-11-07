@@ -1,0 +1,1 @@
+surge ./website schemaviz.surge.sh
