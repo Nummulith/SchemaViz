@@ -2,10 +2,13 @@ import json
 
 from lambda_function import lambda_handler
 
-with open('./website/metadata.yaml', 'r') as file:
+path = "combo"
+path = "./website/data/" + path
+
+with open(path + '_md.yaml', 'r') as file:
     metadata = file.read()
 
-with open('./website/data.yaml', 'r') as file:
+with open(path + '_dt.yaml', 'r') as file:
     data = file.read()
 
 param = {
@@ -24,5 +27,5 @@ body = res["body"]
 body = json.loads(body)
 body = body["result"]
 
-with open('./lambda/lambda_test.html', 'w') as file:
+with open('./aws_lambda/lambda_test.html', 'w') as file:
     file.write(body)

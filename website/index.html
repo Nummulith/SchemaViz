@@ -51,8 +51,107 @@
     </div>
 
     <div id="tab0" class="tab-content">
-        <h3>Home</h3>
-        Home page
+        <h2>SchemaViz</h2>
+        <h3>General overview</h3>
+        <p><b>SchemaViz</b> is the <b>DaC</b> (Diagram as Code) tool.</p>
+        <p>It generates diagrams that visually describe relationships between objects based on two key input sources: <b>Metadata</b> and <b>Data</b>.</p>
+        <p><b>Metadata</b> defines the object classes, including their fields and attributes, while <b>Data</b> describes instances of these objects and their specific values. Together, these inputs enable the generation of clear, meaningful diagrams to represent object hierarchies, associations, and more.</p>
+        <p>This approach allows for dynamic creation of complex object relationship diagrams easily</p>
+
+        <h3>Usage</h3>
+        <p>The Metadata input is provided on the <b>Metadata</b> tab, while the Data input is entered on the <b>Data</b> tab. The resulting diagram is generated on the <b>Result</b> tab by clicking the "<b>Generate Diagram</b>" button.</p>
+
+        <h3>Capabilities</h3>
+        <p>By clicking the <button onclick="loadAndRun('test')">Example</button> buttons, predefined example values will be loaded into the <b>Metadata</b> and <b>Data</b> tabs, and the view will switch to the <b>Result</b> tab, generating the corresponding diagram. You can review the example data and metadata on their respective tabs if needed.</p>
+
+        <h4>Objects</h4>
+        <p>The main displayed elements are objects. Using the "Draw" parameter, you can specify which elements are displayed: ID, class, primary representation, and additional representation: <button onclick="loadAndRun('objects')">Example</button> </p>
+
+        <h4>Links</h4>
+        <p>Objects can be connected by relationships—both direct and reverse links: <button onclick="loadAndRun('links')">Example</button></p>
+
+        <h4>Nesting</h4>
+        <p>Objects can be nested within one another: <button onclick="loadAndRun('owner')">Example</button></p>
+
+        <h4>Lists</h4>
+        <p>Objects can appear as list elements within other objects: <button onclick="loadAndRun('list')">Example</button></p>
+
+        <h4>Combination</h4>
+        <p>Feel free to combine all the aforementioned capabilities: <button onclick="loadAndRun('combo')">Example</button></p>
+
+        <h3>Metadata structure</h3>
+        <p>The <b>Metadata</b> structure is represented as YAML and has a three-level hierarchy:</p>
+        <ul>
+            <li>Classes</li>
+            <li>Fields</li>
+            <li>Field Properties</li>
+        </ul>        
+
+        <h4>Classes</h4>
+        <p>These are the object classes that are defined in the metadata and will have corresponding data instances in the Data section</p>
+
+        <h4>Fields</h4>
+        <p>These are the fields of the object classes that are outlined in the metadata. Each field will have corresponding values in the Data section, representing the properties or attributes of the objects.</p>
+        <p>There are predefined fields:</p>
+        <ul>
+            <li><b>Color</b>: Defines the color of the object.</li>
+            <li><b>Draw</b>: Specifies an array of elements that determine the object's display. Possible elements:
+                <ul>
+                    <li><b>ID</b>: Object identifier.</li>
+                    <li><b>VIEW</b>: Primary representation.</li>
+                    <li><b>EXT</b>: Extended representation.</li>
+                    <li><b>CLASS</b>: Name of the object's class.</li>
+                </ul>
+            </li>
+        </ul>        
+
+        <h4>Field Properties</h4>
+        <p>Field properties can be:</p>
+        <ul>
+            <li><b>Value</b>: Indicates a constant value.</li>
+            <li><b>Role</b>: Specifies the role of the field, which can be:
+                <ul>
+                    <li><b>OWNER</b>: Owner of subordinate objects.</li>
+                    <li><b>LIST_NAME</b>: Name of a list.</li>
+                    <li><b>LIST_ITEM</b>: Identifier within a list.</li>
+                    <li><b>ID</b>: Object identifier.</li>
+                    <li><b>VIEW</b>: Primary representation.</li>
+                    <li><b>EXT</b>: Extended representation.</li>
+                    <li><b>LINK</b>: Outgoing link.</li>
+                    <li><b>LINK_IN</b>: Incoming link.</li>
+                </ul>
+            </li>
+            <li><b>Type</b>: Specifies the class name as a type reference, indicating that the field is a link.</li>
+        </ul>        
+
+        <h4>Example</h4>
+        <pre><code>
+            Score:
+                Color: BLUE_DARK
+                Draw: [VIEW]
+                Id:
+                    Role: ID
+                Name:
+                    Role: VIEW
+        </code></pre>        
+
+        <h3>Data structure</h3>
+        <p>Data structure is represented as YAML and has a two-level hierarchy.</p>
+        <p>It has an additional array level at the top for convenience in structuring the data.</p>
+        <p>The layers are:</p>
+        <ul>
+            <li><b>Classes</b>: Classes of objects.</li>
+            <li><b>Object fields</b>: Objects (as the sets of it's fields).</li>
+        </ul>
+
+        <h4>Example</h4>
+        <pre><code>
+            - Score:
+                - Id: 001
+                  Name: 'This score'
+        </code></pre>        
+
+        
     </div>
 
     <div id="tab1" class="tab-content">
@@ -69,10 +168,9 @@
 
     <div id="tab3" class="tab-content">
         <h3>Result</h3>
-        <button onclick="sendYAML()">Send to API</button>
+        <button onclick="sendYAML()">Generate Diagram</button>
         <div id="result"></div><br>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script>
         function openTab(tabId) {
@@ -101,19 +199,20 @@
             // console.log('1:', param);
 
             axios.post(path, param)
-            .then(response => {
+                .then(response => {
                     console.log(response.data);
                     document.getElementById('result').innerHTML = response.data["result"];
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    document.getElementById('result').innerHTML = error;
+                    if (error.response && error.response.data) {
+                        document.getElementById('result').innerHTML = error.response.data.message || JSON.stringify(error.response.data);
+                    } else {
+                        document.getElementById('result').innerHTML = 'An unexpected error occurred.';
+                    }
                 });
         }
 
-        openTab('tab0');
-    </script>
-    <script>
         function loadYamlIntoTextarea(filePath, textareaId) {
             fetch(filePath)
                 .then(response => {
@@ -130,12 +229,22 @@
                 });
         }
 
-        function loadYamls() {
-            loadYamlIntoTextarea('./data/metadata.yaml', 'metadata');
-            loadYamlIntoTextarea('./data/data.yaml', 'data');
+        function loadYamls(event, pfx = "auto") {
+            loadYamlIntoTextarea('./data/' + pfx + '_md.yaml', 'metadata');
+            loadYamlIntoTextarea('./data/' + pfx + '_dt.yaml', 'data');
+            console.log(pfx);
         }
 
+        function loadAndRun(pfx) {
+            loadYamls(null, pfx);
+            // sendYAML();
+            openTab('tab3');
+        }
+
+        openTab('tab0');
+
         window.onload = loadYamls;
+
     </script>
 
 </body>

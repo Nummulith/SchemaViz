@@ -1,0 +1,12 @@
+- Cat:
+  - Name: Muff1
+  - Name: Barsick
+  - Name: Bagirah
+
+- Dog:
+  - Id: '000'
+    Name: Spot
+    Description: Barking
+  - Id: '001'
+    Name: Bobick
+    Description: Waving Tail

@@ -1,0 +1,11 @@
+- Part:
+  - Id: '001'
+    Name: Root
+
+- Instr:
+  - Id: '001'
+    Name: Item1
+    Parent: '001'
+  - Id: '002'
+    Name: Item2
+    Parent: '001'

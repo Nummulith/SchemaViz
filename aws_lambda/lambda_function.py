@@ -75,7 +75,12 @@ class lambda_invoke:
         functions = cls.get_static_methods()
         handler = functions[func] if func in functions else cls.invalidpath_handler
 
-        return handler(event, context)
+        try:
+            res = handler(event, context)
+        except Exception as e:
+            res = lambda_invoke.response(f"Internal Server Lambda_Viz Error: {e}", 500)
+
+        return res
 
 class lambda_viz(lambda_invoke):
     @staticmethod

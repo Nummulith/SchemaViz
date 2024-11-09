@@ -1,0 +1,51 @@
+- Category:
+  - Id: El
+    Name: Electronics
+    ParentCategory: ''
+
+  - Id: Cmp
+    Name: Computers
+    ParentCategory: El
+
+- Item:
+  - Id: LT
+    Name: Laptop
+    Category: Cmp
+    Usage: User
+    Link: WF
+
+  - Id: Ms
+    Name: Mouse
+    Category: Cmp
+    Link: USB
+
+  - Id: SF
+    Name: Smartphone
+    Category: El
+    Usage: User
+    Link: BT
+
+  - Id: Rt
+    Name: Router
+    Category: El
+
+- Connectivity:
+  - Id: BL
+    Name: Battery Life
+    ParentItem: SF
+
+  - Id: USB
+    Name: USB
+    ParentItem: LT
+
+  - Id: BT
+    Name: BlueTooth
+    ParentItem: LT
+
+  - Id: WF
+    Name: WiFi
+    ParentItem: Rt
+
+- User:
+  - Id: User
+    Name: John Doe

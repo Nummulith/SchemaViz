@@ -1,0 +1,14 @@
+Person:
+  Color: RED
+  Draw: [VIEW]
+  Name:
+    Role: ID
+  Father:
+    Role: LINK_IN
+    Type: Person
+  Mother:
+    Role: LINK_IN
+    Type: Person
+  Wife:
+    Role: LINK
+    Type: Person

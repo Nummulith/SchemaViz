@@ -1,0 +1,10 @@
+- Collection:
+  - Id: '000'
+    Name: Numbers
+    Owner: ''
+  - Id: '001'
+    Name: Even
+    Owner: '000'
+  - Id: '002'
+    Name: Odd
+    Owner: '000'

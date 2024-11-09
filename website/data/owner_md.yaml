@@ -1,0 +1,9 @@
+Collection:
+  Draw: [ID, VIEW, CLASS]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+  Owner:
+    Type: Collection
+    Role: OWNER

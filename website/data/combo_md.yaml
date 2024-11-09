@@ -1,0 +1,49 @@
+Category:
+  Color: GREEN
+  Draw: [VIEW, CLASS]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+  ParentCategory:
+    Role: OWNER
+    Type: Category
+
+Item:
+  Color: ORANGE
+  Draw: [VIEW, CLASS]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+  Category:
+    Role: OWNER
+    Type: Category
+  Usage:
+    Role: LINK
+    Type: User
+  Link:
+    Role: LINK
+    Type: Connectivity
+
+Connectivity:
+  Color: BLUE_DARK
+  Draw: [VIEW, CLASS]
+  ListName:
+    Role: LIST_NAME
+    Value: Connectivity
+  ParentItem:
+    Type: Item
+    Role: LIST_ITEM
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+
+User:
+  Color: RED
+  Draw: [VIEW]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW

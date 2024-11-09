@@ -1,0 +1,19 @@
+- Person:
+  - Name: Alice
+    Father: Bob
+    Mother: Feodora
+
+  - Name: Bob
+    Wife: Feodora
+
+  - Name: Chris
+    Father: Dirk
+    Mother: Eva
+    Wife: Alice
+
+  - Name: Dirk
+    Wife: Eva
+
+  - Name: Eva
+
+  - Name: Feodora

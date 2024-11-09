@@ -1,0 +1,21 @@
+Part:
+  Color: BLUE
+  Draw: [ VIEW ]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+
+Instr:
+  Color: CRIMSON
+  Draw: [ ID, VIEW, CLASS ]
+  ListName:
+    Role: LIST_NAME
+    Value: Instrs
+  Parent:
+    Type: Part
+    Role: LIST_ITEM
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
