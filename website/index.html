@@ -214,7 +214,7 @@
         }
 
         function loadYamlIntoTextarea(filePath, textareaId) {
-            fetch(filePath)
+            return fetch(filePath)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`Failed to fetch ${filePath}: ${response.statusText}`);
@@ -229,15 +229,15 @@
                 });
         }
 
-        function loadYamls(event, pfx = "auto") {
-            loadYamlIntoTextarea('./data/' + pfx + '_md.yaml', 'metadata');
-            loadYamlIntoTextarea('./data/' + pfx + '_dt.yaml', 'data');
+        async function loadYamls(pfx = "auto") {
+            await loadYamlIntoTextarea('./data/' + pfx + '_md.yaml', 'metadata');
+            await loadYamlIntoTextarea('./data/' + pfx + '_dt.yaml', 'data');
             console.log(pfx);
         }
 
-        function loadAndRun(pfx) {
-            loadYamls(null, pfx);
-            // sendYAML();
+        async function loadAndRun(pfx) {
+            await loadYamls(pfx);
+            sendYAML();
             openTab('tab3');
         }
 
