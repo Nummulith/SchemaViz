@@ -1,6 +1,6 @@
 Cat:
   Color: RED
-  Draw: [VIEW]
+  Draw: [VIEW, CLASS]
   Name:
     Role: VIEW
 

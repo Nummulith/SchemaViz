@@ -12,74 +12,139 @@
             display: flex;
             flex-direction: column;
         }
+        h1{
+            margin-top: 0px;
+            margin-bottom: 16px;
+        }
+        h2 {
+            font-weight: normal;
+            margin-top: 48px;
+            margin-bottom: 16px;
+        }
+        h3, h4 {
+            font-weight: normal;
+            margin-bottom: 16px;
+        }
+        p, ul {
+            margin-top: 5px;
+            margin-bottom: 12px;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+
         .tabs { display: flex; cursor: pointer; }
         .tab {
             padding: 10px;
             background-color: #f1f1f1;
             margin-right: 5px;
-            display: inline-flex; 
+            display: flex; 
             align-items: flex-start;
-            vertical-align: top;
+            vertical-align: center;
+            align-items: center;
         }
         .tab-content {
             display: none;
             padding: 15px;
             border: 1px solid #ccc;
-            height: calc(100vh - 200px);
+            height: calc(100vh - 100px);
 
-            width: 95vw;
-            /* overflow: auto; */
+            width: calc(100vw - 32px);
             overflow-x: auto;
             overflow-y: auto;
-
-
         }
+        .tab.active { background-color: #a9dfbf; }
         .tab-content.active { display: block; line-height: 1; }
-        textarea { width: 100%; height: calc(100vh - 300px); margin-top: 10px; }
-        button { margin-top: 10px; }
+        textarea { width: 100%; height: calc(100vh - 180px); margin-top: 10px; }
+        button { margin-top: 5px; }
+
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .center {
+            text-align: center;
+        }
+        
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }        
     </style>
 </head>
 <body>
     <div class="tabs">
-        <div class="tab" onclick="openTab('tab0')">
-            <img src="img/logo.jpg" alt="SchemaViz" width="50" height="50">
+        <div id="tab0" class="tab" onclick="openTab('tab0')">
+            <img src="img/logo.png" alt="SchemaViz" width="50" height="50">
             <b>SchemaViz</b>
         </div>
-        <div class="tab" onclick="openTab('tab1')">Metadata</div>
-        <div class="tab" onclick="openTab('tab2')">Data</div>
-        <div class="tab" onclick="openTab('tab3')">Result</div>
+        <div id="tab1" class="tab" onclick="openTab('tab1')">Metadata</div>
+        <div id="tab2" class="tab" onclick="openTab('tab2')">Data</div>
+        <div id="tab3" class="tab" onclick="openTab('tab3')">Result</div>
     </div>
 
-    <div id="tab0" class="tab-content">
-        <h2>SchemaViz</h2>
-        <h3>General overview</h3>
-        <p><b>SchemaViz</b> is the <b>DaC</b> (Diagram as Code) tool.</p>
-        <p>It generates diagrams that visually describe relationships between objects based on two key input sources: <b>Metadata</b> and <b>Data</b>.</p>
-        <p><b>Metadata</b> defines the object classes, including their fields and attributes, while <b>Data</b> describes instances of these objects and their specific values. Together, these inputs enable the generation of clear, meaningful diagrams to represent object hierarchies, associations, and more.</p>
-        <p>This approach allows for dynamic creation of complex object relationship diagrams easily</p>
+    <div id="tab0_content" class="tab-content">
+        <h1>SchemaViz</h1>
+        <p>© Created by Pavel ERESKO, 2024</p>
+        <p>Connect with me on <a href="https://www.linkedin.com/in/pavel-eresko/" target="_blank">LinkedIn</a></p>
+        <p>Explore the project's source code on <a href="https://github.com/Nummulith/SchemaViz" target="_blank">GitHub</a>.</p>
 
-        <h3>Usage</h3>
+
+        <h2>General overview</h2>
+        <p><b>SchemaViz</b> is the <b>DaC</b> (Diagram as Code) tool. It generates diagrams that visually describe relationships between objects based on two key input sources: <b>Metadata</b> and <b>Data</b>.</p>
+        <p><b>Metadata</b> defines the object classes, including their fields and attributes, while <b>Data</b> describes instances of these objects and their specific values.</p>
+        <p>This tool makes easy to dynamically generate clear, meaningful diagrams representing complex object hierarchies, associations and relationships.</p>
+
+        <h2>Technologies</h2>
+        <ul>
+            <li>Frontend: <b>HTML/CSS</b>, <b>JavaScript</b> deployed on <b>Surge.sh</b></li>
+            <li>Backend: <b>Python</b> deployed on <b>AWS (API Gateway, AWS Lambda)</b></li>
+            <li>Diagram engine: <b>Graphviz</b> recompiled to ensure compatibility with the <b>AWS Lambda</b> used <b>Linux</b> distribution</li>
+        </ul>
+
+        <h2>Usage</h2>
         <p>The Metadata input is provided on the <b>Metadata</b> tab, while the Data input is entered on the <b>Data</b> tab. The resulting diagram is generated on the <b>Result</b> tab by clicking the "<b>Generate Diagram</b>" button.</p>
 
-        <h3>Capabilities</h3>
-        <p>By clicking the <button onclick="loadAndRun('test')">Example</button> buttons, predefined example values will be loaded into the <b>Metadata</b> and <b>Data</b> tabs, and the view will switch to the <b>Result</b> tab, generating the corresponding diagram. You can review the example data and metadata on their respective tabs if needed.</p>
+        <h2>Features' examples</h2>
+        <p>By clicking the <button onclick="loadAndRun('combo')">Draw</button> buttons, predefined example values will be loaded into the <b>Metadata</b> and <b>Data</b> tabs, and the view will switch to the <b>Result</b> tab, generating the corresponding diagram. You can review the example data and metadata on their respective tabs if needed.</p>
 
-        <h4>Objects</h4>
-        <p>The main displayed elements are objects. Using the "Draw" parameter, you can specify which elements are displayed: ID, class, primary representation, and additional representation: <button onclick="loadAndRun('objects')">Example</button> </p>
+        <table>
+            <tr>
+                <th>Objects</th>
+                <td>The main displayed elements are objects.</td>
+                <th class="center"><center><button onclick="loadAndRun('objects')">Draw</button></center></th>
+            </tr>
+            <tr>
+                <th>Links</th>
+                <td>Objects can be connected by relationships - both direct and reverse links.</td>
+                <th class="center"><button onclick="loadAndRun('links')">Draw</button></th>
+            </tr>
+            <tr>
+                <th>Nesting</th>
+                <td>Objects can be nested within one another.</td>
+                <th class="center"><button onclick="loadAndRun('owner')">Draw</button></th>
+            </tr>
+            <tr>
+                <th>Lists</th>
+                <td>Objects can appear as list elements within other objects.</td>
+                <th class="center"><button onclick="loadAndRun('list')">Draw</button></th>
+            </tr>
+            <tr>
+                <th>Combination</th>
+                <td>Feel free to combine all the aforementioned capabilities.</td>
+                <th class="center"><button onclick="loadAndRun('combo')">Draw</button></th>
+            </tr>
+        </table>
 
-        <h4>Links</h4>
-        <p>Objects can be connected by relationships—both direct and reverse links: <button onclick="loadAndRun('links')">Example</button></p>
-
-        <h4>Nesting</h4>
-        <p>Objects can be nested within one another: <button onclick="loadAndRun('owner')">Example</button></p>
-
-        <h4>Lists</h4>
-        <p>Objects can appear as list elements within other objects: <button onclick="loadAndRun('list')">Example</button></p>
-
-        <h4>Combination</h4>
-        <p>Feel free to combine all the aforementioned capabilities: <button onclick="loadAndRun('combo')">Example</button></p>
-
-        <h3>Metadata structure</h3>
+        
+        <h2>Metadata structure</h2>
         <p>The <b>Metadata</b> structure is represented as YAML and has a three-level hierarchy:</p>
         <ul>
             <li>Classes</li>
@@ -87,10 +152,10 @@
             <li>Field Properties</li>
         </ul>        
 
-        <h4>Classes</h4>
+        <h3>Classes</h3>
         <p>These are the object classes that are defined in the metadata and will have corresponding data instances in the Data section</p>
 
-        <h4>Fields</h4>
+        <h3>Fields</h3>
         <p>These are the fields of the object classes that are outlined in the metadata. Each field will have corresponding values in the Data section, representing the properties or attributes of the objects.</p>
         <p>There are predefined fields:</p>
         <ul>
@@ -105,7 +170,7 @@
             </li>
         </ul>        
 
-        <h4>Field Properties</h4>
+        <h3>Field Properties</h3>
         <p>Field properties can be:</p>
         <ul>
             <li><b>Value</b>: Indicates a constant value.</li>
@@ -124,9 +189,9 @@
             <li><b>Type</b>: Specifies the class name as a type reference, indicating that the field is a link.</li>
         </ul>        
 
-        <h4>Example</h4>
-        <pre><code>
-            Score:
+        <h3>Example</h3>
+        <pre>
+<code>            Score:
                 Color: BLUE_DARK
                 Draw: [VIEW]
                 Id:
@@ -135,7 +200,7 @@
                     Role: VIEW
         </code></pre>        
 
-        <h3>Data structure</h3>
+        <h2>Data structure</h2>
         <p>Data structure is represented as YAML and has a two-level hierarchy.</p>
         <p>It has an additional array level at the top for convenience in structuring the data.</p>
         <p>The layers are:</p>
@@ -144,9 +209,9 @@
             <li><b>Object fields</b>: Objects (as the sets of it's fields).</li>
         </ul>
 
-        <h4>Example</h4>
-        <pre><code>
-            - Score:
+        <h3>Example</h3>
+        <pre>
+<code>            - Score:
                 - Id: 001
                   Name: 'This score'
         </code></pre>        
@@ -154,19 +219,19 @@
         
     </div>
 
-    <div id="tab1" class="tab-content">
+    <div id="tab1_content" class="tab-content">
         <h3>Metadata.yaml</h3>
         <input type="file" id="file1" onchange="loadFile(event, 'metadata')">
         <textarea id="metadata"># Default Metadata.yaml content</textarea><br>
     </div>
 
-    <div id="tab2" class="tab-content">
+    <div id="tab2_content" class="tab-content">
         <h3>Data.yaml</h3>
         <input type="file" id="file2" onchange="loadFile(event, 'data')">
         <textarea id="data"># Default Data.yaml content</textarea><br>
     </div>
 
-    <div id="tab3" class="tab-content">
+    <div id="tab3_content" class="tab-content">
         <h3>Result</h3>
         <button onclick="sendYAML()">Generate Diagram</button>
         <div id="result"></div><br>
@@ -174,9 +239,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script>
         function openTab(tabId) {
-            const tabs = document.querySelectorAll('.tab-content');
+            console.log(tabId)
+
+            const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
+
+            const cont = document.querySelectorAll('.tab-content');
+            cont.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId + "_content").classList.add('active');
         }
 
         function loadFile(event, elementId) {
@@ -193,14 +264,10 @@
             const data     = document.getElementById('data'    ).value;
 
             let param = { metadata, data };
-            // console.log('0:', param);
-
             param = JSON.stringify(param);
-            // console.log('1:', param);
 
             axios.post(path, param)
                 .then(response => {
-                    console.log(response.data);
                     document.getElementById('result').innerHTML = response.data["result"];
                 })
                 .catch(error => {
@@ -229,14 +296,13 @@
                 });
         }
 
-        async function loadYamls(pfx = "auto") {
+        async function loadYamls(event = null,  pfx = "combo") {
             await loadYamlIntoTextarea('./data/' + pfx + '_md.yaml', 'metadata');
             await loadYamlIntoTextarea('./data/' + pfx + '_dt.yaml', 'data');
-            console.log(pfx);
         }
 
         async function loadAndRun(pfx) {
-            await loadYamls(pfx);
+            await loadYamls(null, pfx);
             sendYAML();
             openTab('tab3');
         }

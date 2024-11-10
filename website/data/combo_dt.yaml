@@ -1,3 +1,7 @@
+- User:
+  - Id: User
+    Name: John Doe
+
 - Category:
   - Id: El
     Name: Electronics
@@ -6,6 +10,10 @@
   - Id: Cmp
     Name: Computers
     ParentCategory: El
+
+  - Id: Prf
+    Name: Peripherals
+    ParentCategory: Cmp
 
 - Item:
   - Id: LT
@@ -16,8 +24,13 @@
 
   - Id: Ms
     Name: Mouse
-    Category: Cmp
+    Category: Prf
     Link: USB
+
+  - Id: KB
+    Name: Keyboard
+    Category: Prf
+    Link: BT
 
   - Id: SF
     Name: Smartphone
@@ -31,7 +44,7 @@
 
 - Connectivity:
   - Id: BL
-    Name: Battery Life
+    Name: Air
     ParentItem: SF
 
   - Id: USB
@@ -45,7 +58,3 @@
   - Id: WF
     Name: WiFi
     ParentItem: Rt
-
-- User:
-  - Id: User
-    Name: John Doe

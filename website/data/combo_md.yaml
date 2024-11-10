@@ -1,6 +1,14 @@
+User:
+  Color: RED
+  Draw: [VIEW, CLASS]
+  Id:
+    Role: ID
+  Name:
+    Role: VIEW
+
 Category:
   Color: GREEN
-  Draw: [VIEW, CLASS]
+  Draw: [VIEW]
   Id:
     Role: ID
   Name:
@@ -35,14 +43,6 @@ Connectivity:
   ParentItem:
     Type: Item
     Role: LIST_ITEM
-  Id:
-    Role: ID
-  Name:
-    Role: VIEW
-
-User:
-  Color: RED
-  Draw: [VIEW]
   Id:
     Role: ID
   Name:
